@@ -4,5 +4,8 @@ version = "0.1.0"
 authors = ["anca"]
 
 [dependencies]
+rand = "*"
 tcod = "*"
+cgmath = "0.8.0"
+collision = "*"
 
