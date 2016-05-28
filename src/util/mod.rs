@@ -1,5 +1,3 @@
-extern crate cgmath;
-extern crate collision;
 
 
 use collision::{Aabb2};

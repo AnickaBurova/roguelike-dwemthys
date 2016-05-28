@@ -1,7 +1,7 @@
 extern crate rand;
-extern crate tcod;
 extern crate cgmath;
 extern crate collision;
+extern crate tcod;
 
 mod game;
 mod util;
@@ -9,18 +9,15 @@ mod updates;
 mod character;
 mod npc;
 mod rendering;
+mod input;
 
 
 use self::game::Game;
-use self::util::{Point, Bounds};
 use self::updates::Updates;
 use self::character::Character;
 use self::npc::NPC;
-use self::rendering::{RenderingComponent,TcodRenderingComponent};
+use self::rendering::{RenderingComponent};
 
-use tcod::console::Root;
-use tcod::{Console};
-use tcod::input::{KeyCode};
 //use tcod::input::{KeyCode,KeyPressFlags};
 
 
@@ -43,21 +40,15 @@ fn main() {
         let d = Box::new(NPC::new_in_game(&game,'d')) as Box<Updates>;
         npcs.push(d);
     }
-    let mut rendering_component= Box::new( TcodRenderingComponent{root: root});
-    render(&mut rendering_component, &npcs, &c);
-    while !(rendering_component.window_closed() || game.exit){
+    game.render(&npcs, &c);
+    while !game.finished() {
         /*let key = root.check_for_keypress(KeyPressFlags::empty());
         let code = match key {
             Some(k) => k.code,
             None => KeyCode::NoKey
         };*/
-        let key = rendering_component.wait_for_keypress();
-        let code = key.code;
-        match code{
-            KeyCode::Escape => game.exit = true,
-            _ => {}
-        }
-        update(&mut npcs, &mut c, &code, &game);
-        render(&mut rendering_component, &npcs, &c);
+        game.update(&mut npcs, &mut c);
+
+        game.render(&npcs, &c);
     }
 }

@@ -2,9 +2,7 @@
 extern crate tcod;
 extern crate rand;
 
-use tcod::console::Root;
 use tcod::input::{KeyCode};
-use tcod::{Console,BackgroundFlag};
 use rand::Rng;
 use collision::{Aabb};
 

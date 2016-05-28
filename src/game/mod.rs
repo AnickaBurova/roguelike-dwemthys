@@ -1,22 +1,29 @@
-use util::Bounds;
-use rendering::RenderingComponent;
+
+use util::{Point,Bounds};
+use rendering::{RenderingComponent, TcodRenderingComponent};
+use updates::Updates;
+use character::Character;
+
+
+use tcod::console::Root;
+use tcod::input::{KeyCode,Key};
 
 pub struct Game<'a> {
     exit :       bool,
     pub window_bounds : Bounds,
-    pub rendering_component : Box<RenderingComponent + 'a>
+    rendering_component : Box<RenderingComponent + 'a>
 }
 
 
 impl<'a> Game<'a> {
     pub fn new() -> Game<'a> {
-        let bound = Bounds::new(Point::new(0,0), Point::new(80,50));
-        let mut root = Root::initializer()
+        let bounds = Bounds::new(Point::new(0,0), Point::new(80,50));
+        let root = Root::initializer()
             .size(80,50)
             .title("Dwemthys")
             .fullscreen(false)
             .init();
-        let rc = Box::new(TcodRenderingComponent{root : root});
+        let rc = Box::new(TcodRenderingComponent::new(root));
         Game{
             exit : false,
             window_bounds : bounds,
@@ -24,19 +31,26 @@ impl<'a> Game<'a> {
         }
     }
 
-    pub fn render(&mut self, npcs : &Vec<Box<Updates>>, c : Character){
+    pub fn render(&mut self, npcs : &Vec<Box<Updates>>, c : &Character){
         self.rendering_component.pre_render();
         for i in npcs.iter() {
-            i.render(&mut self.rendering_component());
+            i.render(&mut *self.rendering_component);
         }
-        c.render(&mut self.rendering_component());
+        c.render(&mut *self.rendering_component);
         self.rendering_component.post_render();
     }
 
-    pub fn update(&mut self, npcs :&mut Vec<Box<Updates>>, c : &mut Character, key : &KeyCode){
-        c.update(key, self);
+    pub fn update(&mut self, npcs :&mut Vec<Box<Updates>>, c : &mut Character){
+        let key = self.wait_for_keypress();
+        let code = key.code;
+        match code{
+            KeyCode::Escape => self.exit = true,
+            _ => {}
+        }
+
+        c.update(&code, self);
         for i in npcs.iter_mut(){
-            i.update(self);
+            i.update(&code,self);
         }
     }
 
@@ -44,5 +58,7 @@ impl<'a> Game<'a> {
         self.rendering_component.wait_for_keypress()
     }
 
-    pub fn 
+    pub fn finished(&self) -> bool {
+        self.rendering_component.window_closed() || self.exit
+    }
 }
