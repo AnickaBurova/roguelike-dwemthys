@@ -1,5 +1,4 @@
-extern crate  tcod;
-
+// rendering
 use tcod::console::Root;
 use tcod::{Console,BackgroundFlag};
 use tcod::input::Key;

@@ -6,18 +6,18 @@ extern crate tcod;
 mod game;
 mod util;
 mod updates;
-mod character;
 mod npc;
 mod rendering;
 mod input;
+mod tcod_impl;
 
 
 use self::game::Game;
 use self::updates::Updates;
-use self::character::Character;
 use self::npc::NPC;
 use self::rendering::{RenderingComponent};
 use self::input::{RandomMovementComponent,MovementComponent};
+use self::tcod_impl::TcodInputMovementComponent;
 
 //use tcod::input::{KeyCode,KeyPressFlags};
 use std::rc::Rc;
@@ -36,7 +36,8 @@ fn main() {
 
     let mut game = Game::new();
 
-    let mut c = Character::new(40,25,'@');
+    let input_mover = Rc::new(TcodInputMovementComponent::new()) as Rc<MovementComponent>;
+    let mut c = NPC::new(40,25,'@',input_mover.clone());
     let mut npcs : Vec<Box<Updates>> = vec![];
     let rand_mover = Rc::new(RandomMovementComponent::new()) as Rc<MovementComponent>;
     for _ in 0..10{

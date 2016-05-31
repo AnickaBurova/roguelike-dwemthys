@@ -1,8 +1,7 @@
-
+// GAME
 use util::{Point,Bounds};
 use rendering::{RenderingComponent, TcodRenderingComponent};
 use updates::Updates;
-use character::Character;
 
 
 use tcod::console::Root;
@@ -31,7 +30,7 @@ impl<'a> Game<'a> {
         }
     }
 
-    pub fn render(&mut self, npcs : &Vec<Box<Updates>>, c : &Character){
+    pub fn render(&mut self, npcs : &Vec<Box<Updates>>, c : &Updates){
         self.rendering_component.pre_render();
         for i in npcs.iter() {
             i.render(&mut *self.rendering_component);
@@ -40,7 +39,7 @@ impl<'a> Game<'a> {
         self.rendering_component.post_render();
     }
 
-    pub fn update(&mut self, npcs :&mut Vec<Box<Updates>>, c : &mut Character){
+    pub fn update(&mut self, npcs :&mut Vec<Box<Updates>>, c : &mut Updates){
         let key = self.wait_for_keypress();
         let code = key.code;
         match code{

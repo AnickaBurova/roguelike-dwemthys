@@ -1,3 +1,4 @@
+// input
 extern crate rand;
 
 use rand::Rng;
@@ -34,6 +35,5 @@ impl MovementComponent for RandomMovementComponent {
         res
     }
 }
-
 
 

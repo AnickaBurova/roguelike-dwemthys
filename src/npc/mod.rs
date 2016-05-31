@@ -1,6 +1,5 @@
 // NPC mod
 extern crate rand;
-extern crate collision;
 
 use util::{Point};
 use game::Game;
@@ -17,9 +16,9 @@ pub struct NPC{
 }
 
 impl NPC{
-    //pub fn new(x : i32, y : i32, dc : char) -> NPC{
-        //NPC{position : Point::new(x,y), display_char : dc}
-    //}
+    pub fn new(x : i32, y : i32, dc : char, mover : Rc<MovementComponent>) -> NPC{
+        NPC{position : Point::new(x,y), display_char : dc, mover : mover}
+    }
     pub fn new_in_game(game : &Game,dc : char, mover : Rc<MovementComponent>) -> NPC{
         NPC{position : Point::new(
                 rand::thread_rng().gen_range(game.window_bounds.min().x, game.window_bounds.max().x)
