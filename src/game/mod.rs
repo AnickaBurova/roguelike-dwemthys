@@ -48,9 +48,9 @@ impl<'a> Game<'a> {
             _ => {}
         }
 
-        c.update(&code, self);
+        c.update(code, self);
         for i in npcs.iter_mut(){
-            i.update(&code,self);
+            i.update(code,self);
         }
     }
 

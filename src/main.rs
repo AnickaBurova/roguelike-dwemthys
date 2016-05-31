@@ -17,8 +17,10 @@ use self::updates::Updates;
 use self::character::Character;
 use self::npc::NPC;
 use self::rendering::{RenderingComponent};
+use self::input::{RandomMovementComponent,MovementComponent};
 
 //use tcod::input::{KeyCode,KeyPressFlags};
+use std::rc::Rc;
 
 
 #[test]
@@ -36,8 +38,9 @@ fn main() {
 
     let mut c = Character::new(40,25,'@');
     let mut npcs : Vec<Box<Updates>> = vec![];
+    let rand_mover = Rc::new(RandomMovementComponent::new()) as Rc<MovementComponent>;
     for _ in 0..10{
-        let d = Box::new(NPC::new_in_game(&game,'d')) as Box<Updates>;
+        let d = Box::new(NPC::new_in_game(&game,'d',rand_mover.clone())) as Box<Updates>;
         npcs.push(d);
     }
     game.render(&npcs, &c);

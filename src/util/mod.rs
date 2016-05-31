@@ -1,5 +1,3 @@
-
-
 use collision::{Aabb2};
 use cgmath::{Point2,Vector2};
 
