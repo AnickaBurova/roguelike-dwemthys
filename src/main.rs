@@ -5,7 +5,6 @@ extern crate tcod;
 
 mod game;
 mod util;
-mod updates;
 mod actor;
 mod rendering;
 mod input;
@@ -13,7 +12,6 @@ mod tcod_impl;
 
 
 use self::game::Game;
-use self::updates::Updates;
 use self::actor::Actor;
 use self::rendering::{RenderingComponent};
 use self::input::{RandomMovementComponent,MovementComponent};
@@ -23,14 +21,6 @@ use self::tcod_impl::TcodInputMovementComponent;
 use std::rc::Rc;
 
 
-#[test]
-fn test_collision(){
-    let p = Point::new(-20isize,30isize);
-    let aabb = Aabb2::new(Point::new(-20,30), Point::new(10,-10));
-    assert!(aabb.contains(Point::new(0,0)));
-}
-
-
 
 fn main() {
 
@@ -38,10 +28,10 @@ fn main() {
 
     let input_mover = Rc::new(TcodInputMovementComponent::new()) as Rc<MovementComponent>;
     let mut c = Actor::new(40,25,'@',input_mover.clone());
-    let mut actors : Vec<Box<Updates>> = vec![];
+    let mut actors : Vec<Box<Actor>> = vec![];
     let rand_mover = Rc::new(RandomMovementComponent::new()) as Rc<MovementComponent>;
     for _ in 0..10{
-        let d = Box::new(Actor::new_in_game(&game,'d',rand_mover.clone())) as Box<Updates>;
+        let d = Box::new(Actor::new_in_game(&game,'d',rand_mover.clone()));
         actors.push(d);
     }
     game.render(&actors, &c);

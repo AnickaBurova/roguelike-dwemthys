@@ -5,7 +5,9 @@ use util::{Point};
 use game::Game;
 use collision::{Aabb};
 use input::MovementComponent;
+use rendering::RenderingComponent;
 
+use tcod::input::{KeyCode};
 use rand::Rng;
 use std::rc::Rc;
 
@@ -26,5 +28,11 @@ impl Actor{
                 ,display_char : dc
                 ,mover : mover
         }
+    }
+    pub fn update(&mut self, key : KeyCode, game : &Game){
+        self.position = self.mover.update(self.position,&game.window_bounds, key);
+    }
+    pub fn render(&self, rendering_component : &mut RenderingComponent){
+        rendering_component.render(self.position, self.display_char);
     }
 }
