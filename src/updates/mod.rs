@@ -3,7 +3,7 @@
 use tcod::input::{KeyCode};
 
 use game::Game;
-use npc::NPC;
+use actor::Actor;
 use rendering::RenderingComponent;
 
 
@@ -13,7 +13,7 @@ pub trait Updates{
 }
 
 
-impl Updates for NPC{
+impl Updates for Actor{
     fn update(&mut self, key : KeyCode, game : &Game){
         self.position = self.mover.update(self.position,&game.window_bounds, key);
     }

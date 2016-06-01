@@ -30,16 +30,16 @@ impl<'a> Game<'a> {
         }
     }
 
-    pub fn render(&mut self, npcs : &Vec<Box<Updates>>, c : &Updates){
+    pub fn render(&mut self, actors : &Vec<Box<Updates>>, c : &Updates){
         self.rendering_component.pre_render();
-        for i in npcs.iter() {
+        for i in actors.iter() {
             i.render(&mut *self.rendering_component);
         }
         c.render(&mut *self.rendering_component);
         self.rendering_component.post_render();
     }
 
-    pub fn update(&mut self, npcs :&mut Vec<Box<Updates>>, c : &mut Updates){
+    pub fn update(&mut self, actors :&mut Vec<Box<Updates>>, c : &mut Updates){
         let key = self.wait_for_keypress();
         let code = key.code;
         match code{
@@ -48,7 +48,7 @@ impl<'a> Game<'a> {
         }
 
         c.update(code, self);
-        for i in npcs.iter_mut(){
+        for i in actors.iter_mut(){
             i.update(code,self);
         }
     }

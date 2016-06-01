@@ -1,4 +1,4 @@
-// NPC mod
+// Actor mod
 extern crate rand;
 
 use util::{Point};
@@ -9,18 +9,18 @@ use input::MovementComponent;
 use rand::Rng;
 use std::rc::Rc;
 
-pub struct NPC{
+pub struct Actor{
     pub position :      Point,
     pub display_char :  char,
     pub mover : Rc<MovementComponent>,
 }
 
-impl NPC{
-    pub fn new(x : i32, y : i32, dc : char, mover : Rc<MovementComponent>) -> NPC{
-        NPC{position : Point::new(x,y), display_char : dc, mover : mover}
+impl Actor{
+    pub fn new(x : i32, y : i32, dc : char, mover : Rc<MovementComponent>) -> Actor{
+        Actor{position : Point::new(x,y), display_char : dc, mover : mover}
     }
-    pub fn new_in_game(game : &Game,dc : char, mover : Rc<MovementComponent>) -> NPC{
-        NPC{position : Point::new(
+    pub fn new_in_game(game : &Game,dc : char, mover : Rc<MovementComponent>) -> Actor{
+        Actor{position : Point::new(
                 rand::thread_rng().gen_range(game.window_bounds.min().x, game.window_bounds.max().x)
                 ,rand::thread_rng().gen_range(game.window_bounds.min().y, game.window_bounds.max().y))
                 ,display_char : dc

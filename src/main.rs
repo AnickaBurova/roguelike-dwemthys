@@ -6,7 +6,7 @@ extern crate tcod;
 mod game;
 mod util;
 mod updates;
-mod npc;
+mod actor;
 mod rendering;
 mod input;
 mod tcod_impl;
@@ -14,7 +14,7 @@ mod tcod_impl;
 
 use self::game::Game;
 use self::updates::Updates;
-use self::npc::NPC;
+use self::actor::Actor;
 use self::rendering::{RenderingComponent};
 use self::input::{RandomMovementComponent,MovementComponent};
 use self::tcod_impl::TcodInputMovementComponent;
@@ -37,22 +37,22 @@ fn main() {
     let mut game = Game::new();
 
     let input_mover = Rc::new(TcodInputMovementComponent::new()) as Rc<MovementComponent>;
-    let mut c = NPC::new(40,25,'@',input_mover.clone());
-    let mut npcs : Vec<Box<Updates>> = vec![];
+    let mut c = Actor::new(40,25,'@',input_mover.clone());
+    let mut actors : Vec<Box<Updates>> = vec![];
     let rand_mover = Rc::new(RandomMovementComponent::new()) as Rc<MovementComponent>;
     for _ in 0..10{
-        let d = Box::new(NPC::new_in_game(&game,'d',rand_mover.clone())) as Box<Updates>;
-        npcs.push(d);
+        let d = Box::new(Actor::new_in_game(&game,'d',rand_mover.clone())) as Box<Updates>;
+        actors.push(d);
     }
-    game.render(&npcs, &c);
+    game.render(&actors, &c);
     while !game.finished() {
         /*let key = root.check_for_keypress(KeyPressFlags::empty());
         let code = match key {
             Some(k) => k.code,
             None => KeyCode::NoKey
         };*/
-        game.update(&mut npcs, &mut c);
+        game.update(&mut actors, &mut c);
 
-        game.render(&npcs, &c);
+        game.render(&actors, &c);
     }
 }
