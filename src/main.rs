@@ -19,6 +19,7 @@ use self::tcod_impl::TcodInputMovementComponent;
 
 //use tcod::input::{KeyCode,KeyPressFlags};
 use std::rc::Rc;
+use rand::Rng;
 
 
 
@@ -30,8 +31,10 @@ fn main() {
     let mut c = Actor::new(40,25,'@',input_mover.clone());
     let mut actors : Vec<Box<Actor>> = vec![];
     let rand_mover = Rc::new(RandomMovementComponent::new()) as Rc<MovementComponent>;
+    let npcs = ['d', 'c', 'k'];
     for _ in 0..10{
-        let d = Box::new(Actor::new_in_game(&game,'d',rand_mover.clone()));
+        let npc = rand::thread_rng().gen_range(0,npcs.len());
+        let d = Box::new(Actor::new_in_game(&game,npcs[npc],rand_mover.clone()));
         actors.push(d);
     }
     game.render(&actors, &c);
