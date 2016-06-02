@@ -53,7 +53,10 @@ impl<'a> Game<'a> {
             KeyCode::Escape => self.exit = true,
             _ => {}
         }
-        let mut actors = vec![];
+        // update will be done in 2 stages
+        // 1st: all actors will move in to new position and fire
+        // 2nd: all actors will accumulate damage if any and potentially die
+        let mut actors = Vec::with_capacity(self.actors.len());
         for a in self.actors.iter(){
             actors.push(Box::new(a.update(code,&self)));
         }
