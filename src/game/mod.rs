@@ -36,7 +36,7 @@ impl<'a> Game<'a> {
     pub fn render(&mut self, world : &World){
         self.rendering_component.pre_render();
         for i in world.actors.iter() {
-            i.render(&mut *self.rendering_component);
+            i.borrow().render(&mut *self.rendering_component);
         }
         self.rendering_component.post_render();
     }
@@ -51,10 +51,9 @@ impl<'a> Game<'a> {
 
         let mut actors = world.actors.clone();
 
-        for b in actors.iter_mut(){
-            b.update(code,self,world);
+        for a in actors.iter_mut(){
+            a.borrow_mut().update(code,self,world);
         }
-        world.actors = actors;
     }
 
     pub fn wait_for_keypress(&mut self) -> Key {

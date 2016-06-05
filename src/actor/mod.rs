@@ -12,7 +12,6 @@ use tcod::input::{KeyCode};
 use rand::Rng;
 use std::rc::Rc;
 
-#[derive(Clone)]
 pub struct Actor{
     pub position :      Point,
     pub display_char :  char,
