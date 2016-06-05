@@ -9,9 +9,12 @@ mod actor;
 mod rendering;
 mod input;
 mod tcod_impl;
+mod world;
+mod component;
 
 
 use self::game::Game;
+use self::world::World;
 use self::rendering::{RenderingComponent};
 
 //use tcod::input::{KeyCode,KeyPressFlags};
@@ -21,17 +24,17 @@ use self::rendering::{RenderingComponent};
 fn main() {
 
     let mut game = Game::new();
-    game.create_level();
+    let mut world = World::new(&game);
 
-    game.render();
+    game.render(&world);
     while !game.finished() {
         /*let key = root.check_for_keypress(KeyPressFlags::empty());
         let code = match key {
             Some(k) => k.code,
             None => KeyCode::NoKey
         };*/
-        game.update();
+        game.update(&mut world);
 
-        game.render();
+        game.render(&world);
     }
 }

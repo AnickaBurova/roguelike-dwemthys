@@ -6,11 +6,13 @@ use game::Game;
 use collision::{Aabb};
 use input::MovementComponent;
 use rendering::RenderingComponent;
+use world::World;
 
 use tcod::input::{KeyCode};
 use rand::Rng;
 use std::rc::Rc;
 
+#[derive(Clone)]
 pub struct Actor{
     pub position :      Point,
     pub display_char :  char,
@@ -29,12 +31,9 @@ impl Actor{
                 ,mover : mover
         }
     }
-    pub fn update(&self, key : KeyCode, game : &Game) -> Actor{
+    pub fn update(&mut self, key : KeyCode, game : &mut Game, world : &mut World) {
         let position = self.mover.update(self.position,&game.window_bounds, key);
-        Actor{ 
-            position : position,
-            display_char : self.display_char,
-            mover : self.mover.clone()}
+        self.position = position;
     }
     pub fn render(&self, rendering_component : &mut RenderingComponent){
         rendering_component.render(self.position, self.display_char);
