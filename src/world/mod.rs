@@ -1,4 +1,18 @@
-//! World
+//! =====================================================================================
+//!
+//!       Filename:  world/mod.rs
+//!
+//!    Description:  The world, it contains actors.
+//!
+//!        Version:  1.0
+//!        Created:  13/06/16 22:43:05
+//!       Revision:  none
+//!       Compiler:  rust
+//!
+//!         Author:  Anicka Burova
+//!
+//! =====================================================================================
+
 extern crate rand;
 
 use actor::Actor;

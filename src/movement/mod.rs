@@ -1,3 +1,18 @@
+//! =====================================================================================
+//!
+//!       Filename:  movement/mod.rs
+//!
+//!    Description:  Components to update actor's movement.
+//!
+//!        Version:  1.0
+//!        Created:  13/06/16 22:43:05
+//!       Revision:  none
+//!       Compiler:  rust
+//!
+//!         Author:  Anicka Burova
+//!
+//! =====================================================================================
+
 extern crate rand;
 
 use rand::Rng;
