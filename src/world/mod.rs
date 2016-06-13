@@ -11,7 +11,6 @@ use rand::Rng;
 use std::cell::RefCell;
 
 pub struct World{
-    //pub actors : Vec<Rc<Actor>>,
     pub actors : Vec<Rc<RefCell<Actor>>>,
 }
 
