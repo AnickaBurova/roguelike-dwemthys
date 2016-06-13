@@ -5,7 +5,7 @@ use collision::{Aabb};
 use tcod::input::KeyCode;
 
 use component::Component;
-use util::{Point,Bounds,Offset};
+use util::{Offset};
 use actor::Actor;
 use game::Game;
 use world::World;

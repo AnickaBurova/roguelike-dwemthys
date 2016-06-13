@@ -4,7 +4,6 @@ extern crate rand;
 use util::{Point,Bounds};
 use rendering::{RenderingComponent, TcodRenderingComponent};
 use world::World;
-use actor::Actor;
 
 
 use tcod::console::Root;

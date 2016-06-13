@@ -7,8 +7,6 @@ mod game;
 mod util;
 mod actor;
 mod rendering;
-mod input;
-mod tcod_impl;
 mod world;
 mod component;
 mod movement;
