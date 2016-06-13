@@ -10,15 +10,15 @@ use actor::Actor;
 use tcod::console::Root;
 use tcod::input::{KeyCode,Key};
 
-pub struct Game<'a> {
+pub struct Game {
     exit :       bool,
     pub window_bounds : Bounds,
-    rendering_component : Box<RenderingComponent + 'a>,
+    rendering_component : Box<RenderingComponent>,
 }
 
 
-impl<'a> Game<'a> {
-    pub fn new() -> Game<'a> {
+impl Game {
+    pub fn new() -> Game {
         let bounds = Bounds::new(Point::new(0,0), Point::new(80,50));
         let root = Root::initializer()
             .size(80,50)
@@ -49,9 +49,9 @@ impl<'a> Game<'a> {
             _ => {}
         }
 
-        let mut actors = world.actors.clone();
+        let actors = world.actors.clone();
 
-        for a in actors.iter_mut(){
+        for a in actors.iter(){
             a.borrow_mut().update(code,self,world);
         }
     }

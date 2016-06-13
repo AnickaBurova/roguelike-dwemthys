@@ -11,7 +11,7 @@ use rand::Rng;
 use std::cell::RefCell;
 
 pub struct World{
-    pub actors : Vec<Rc<RefCell<Actor>>>,
+    pub actors : Rc<Vec<Rc<RefCell<Actor>>>>,
 }
 
 impl World{
@@ -30,7 +30,7 @@ impl World{
         let h = Rc::new(RefCell::new(Actor::new(40,25,'@',input_mover.clone())));
         actors.push(h);
         World{
-            actors : actors,
+            actors : Rc::new(actors),
         }
     }
 }
