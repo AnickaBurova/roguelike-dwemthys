@@ -34,9 +34,9 @@ impl Actor{
                 components : Rc::new(vec![]),
         }
     }
-    pub fn update(&mut self, key : KeyCode, game : &mut Game, world : &mut World) {
-        let position = self.mover.update(self.position,&game.window_bounds, key);
-        self.position = position;
+    pub fn update(&mut self, game : &mut Game, world : &mut World) {
+        //let position = self.mover.update(self.position,&game.window_bounds, key);
+        //self.position = position;
         let components = self.components.clone();
         for c in components.iter(){
             c.borrow_mut().update(self,game,world);
@@ -44,5 +44,9 @@ impl Actor{
     }
     pub fn render(&self, rendering_component : &mut RenderingComponent){
         rendering_component.render(self.position, self.display_char);
+    }
+
+    pub fn add_component( &mut self, cmp: Rc<RefCell<Component>>) {
+        Rc::make_mut(&mut self.components).push(cmp);
     }
 }

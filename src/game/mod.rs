@@ -14,6 +14,7 @@ pub struct Game {
     exit :       bool,
     pub window_bounds : Bounds,
     rendering_component : Box<RenderingComponent>,
+    pub last_key: KeyCode,
 }
 
 
@@ -30,6 +31,7 @@ impl Game {
             exit : false,
             window_bounds : bounds,
             rendering_component : rc,
+            last_key : KeyCode::Escape,
         }
     }
 
@@ -43,8 +45,8 @@ impl Game {
 
     pub fn update(&mut self, world : &mut World){
         let key = self.wait_for_keypress();
-        let code = key.code;
-        match code{
+        self.last_key = key.code;
+        match self.last_key{
             KeyCode::Escape => self.exit = true,
             _ => {}
         }
@@ -52,7 +54,7 @@ impl Game {
         let actors = world.actors.clone();
 
         for a in actors.iter(){
-            a.borrow_mut().update(code,self,world);
+            a.borrow_mut().update(self,world);
         }
     }
 

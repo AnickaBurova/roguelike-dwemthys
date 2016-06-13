@@ -11,13 +11,12 @@ mod input;
 mod tcod_impl;
 mod world;
 mod component;
+mod movement;
 
 
 use self::game::Game;
 use self::world::World;
 use self::rendering::{RenderingComponent};
-
-//use tcod::input::{KeyCode,KeyPressFlags};
 
 
 
@@ -28,11 +27,6 @@ fn main() {
 
     game.render(&world);
     while !game.finished() {
-        /*let key = root.check_for_keypress(KeyPressFlags::empty());
-        let code = match key {
-            Some(k) => k.code,
-            None => KeyCode::NoKey
-        };*/
         game.update(&mut world);
 
         game.render(&world);
