@@ -13,6 +13,8 @@
 //!
 //! =====================================================================================
 
+#![feature(borrow_state)]
+
 extern crate rand;
 extern crate cgmath;
 extern crate collision;
@@ -29,12 +31,9 @@ mod movement;
 
 use self::game::Game;
 use self::world::World;
-use self::rendering::{RenderingComponent};
-
 
 
 fn main() {
-
     let mut game = Game::new();
     let mut world = World::new(&game);
 

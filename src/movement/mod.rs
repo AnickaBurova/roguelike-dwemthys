@@ -65,3 +65,30 @@ impl Component for InputMovement {
         }
     }
 }
+
+pub struct ChaseMovement {
+    pub target: char,
+}
+
+impl Component for ChaseMovement {
+    fn update(&mut self, actor: &mut Actor, _: &Game, world: &mut World) {
+        // find character to chase
+        let target = world.find(self.target);
+        match target {
+            Some(ref t) => {
+                // start moving toward the target
+                let target = t.borrow();
+                let x_delta = target.position.x - actor.position.x;
+                let y_delta = target.position.y - actor.position.y;
+                let mut offset = Offset::new(0,0);
+                if x_delta.abs() > y_delta.abs() {
+                    offset.x = x_delta.signum();
+                } else {
+                    offset.y = y_delta.signum();
+                }
+                actor.position = actor.position + offset;
+            }
+            _ => {},// do nothing if we dont have a target
+        }
+    }
+}
